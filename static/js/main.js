@@ -9,12 +9,18 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("online", () => offlineBanner.classList.add("d-none"));
     window.addEventListener("offline", () => offlineBanner.classList.remove("d-none"));
 
+    // ✅ ONLY ONE appendMessage function (using marked.js)
     function appendMessage(sender, text) {
         const div = document.createElement("div");
         div.className = `message ${sender}`;
+        
+        // Convert Markdown to HTML using marked for the AI, plain text for the user
+        const formattedText = sender === "ai" ? marked.parse(text) : text;
+
         div.innerHTML = `<span class="badge ${sender === "user" ? "bg-primary" : "bg-secondary"}">
             ${sender === "user" ? "You" : "AI"}</span>
-            <p class="mt-1">${text}</p>`;
+            <div class="message-content mt-1">${formattedText}</div>`;
+            
         chatBox.appendChild(div);
         chatBox.scrollTop = chatBox.scrollHeight;
     }

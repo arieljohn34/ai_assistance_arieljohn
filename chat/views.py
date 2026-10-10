@@ -9,11 +9,15 @@ from django.http import JsonResponse, HttpResponse
 
 # 1. Helper function to talk to Gemini
 def get_gemini_response(prompt):
-    """Send a prompt to Gemini and return the response text."""
     client = genai.Client(api_key=settings.GEMINI_API_KEY)
+    
+    # Add instructions to make the output cleaner
+    system_instruction = "You are a helpful study assistant. Provide clear, concise, and well-formatted answers using bullet points where appropriate. Use bold text for key terms. Keep it simple."
+    
     response = client.models.generate_content(
-        model= "gemini-3.8-flash",   # or "gemini-2.5-flash-lite"
-        contents=prompt
+        model="gemini-3.8-flash",
+        contents=prompt,
+        config={'system_instruction': system_instruction} # <-- Add this
     )
     return response.text
 
