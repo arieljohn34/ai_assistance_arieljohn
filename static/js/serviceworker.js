@@ -6,7 +6,7 @@ const ASSETS = [
     "/",
     "/static/css/style.css",
     "/static/js/main.js",
-    "/static/images/icon-192x192.png",
+    "/static/img/aice_192x192.png",
 ];
 
 // Install: cache core assets
