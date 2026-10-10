@@ -11,16 +11,20 @@ from django.http import JsonResponse, HttpResponse
 def get_gemini_response(prompt):
     client = genai.Client(api_key=settings.GEMINI_API_KEY)
     
-    # Add instructions to make the output cleaner
-    system_instruction = "You are a helpful study assistant. Provide clear, concise, and well-formatted answers using bullet points where appropriate. Use bold text for key terms. Keep it simple."
+    # UPDATED SYSTEM INSTRUCTION
+    system_instruction = (
+        "You are a helpful study assistant. Provide clear, concise, and well-formatted answers "
+        "using bullet points where appropriate. Use bold text for key terms. Keep it simple. "
+        "IMPORTANT: Do not use LaTeX math formatting (e.g., do not write $H_2O$ or $CO_2$). "
+        "Instead, write chemical formulas in plain text or using Unicode subscripts (e.g., H₂O, CO₂)."
+    )
     
     response = client.models.generate_content(
         model="gemini-3.8-flash",
         contents=prompt,
-        config={'system_instruction': system_instruction} # <-- Add this
+        config={'system_instruction': system_instruction}
     )
     return response.text
-
 # 2. NEW: View to render your main HTML page (chats.html)
 def chat_page(request):
     # Because you renamed your folder to 'chats', the path is now 'chats/chats.html'
