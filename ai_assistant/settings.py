@@ -11,10 +11,15 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
@@ -27,6 +32,27 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# PWA Settings
+PWA_APP_NAME = "AI Assistant"
+PWA_APP_DESCRIPTION = "A simple AI assistant powered by Gemini"
+PWA_APP_THEME_COLOR = "#0A0302"
+PWA_APP_BACKGROUND_COLOR = "#ffffff"
+PWA_APP_DISPLAY = "standalone"
+PWA_APP_SCOPE = "/"
+PWA_APP_ORIENTATION = "any"
+PWA_APP_START_URL = "/"
+PWA_APP_STATUS_BAR_COLOR = "default"
+PWA_APP_ICONS = [
+    {"src": "/static/images/icon-192x192.png", "sizes": "192x192"},
+    {"src": "/static/images/icon-512x512.png", "sizes": "512x512"},
+]
+PWA_APP_ICONS_APPLE = [
+    {"src": "/static/images/icon-192x192.png", "sizes": "192x192"},
+]
+PWA_APP_DIR = "ltr"
+PWA_APP_LANG = "en-US"
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, "static/js/serviceworker.js")
+
 
 # Application definition
 
@@ -37,6 +63,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'chat',  
+    'pwa', 
 ]
 
 MIDDLEWARE = [
